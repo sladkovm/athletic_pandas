@@ -1,5 +1,6 @@
 import unittest
 
+import os
 import numpy as np
 import pandas as pd
 import pytest
@@ -23,8 +24,9 @@ def wdf():
 @pytest.fixture
 def wdf_small():
     athlete = models.Athlete(cp=200, w_prime=20000)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     wdf = models.WorkoutDataFrame(
-        pd.read_csv('tests/example_files/workout_1_short.csv')
+        pd.read_csv(os.path.join(current_dir, 'example_files/workout_1_short.csv'))
     )
     wdf = wdf.set_index('time')
     wdf.athlete = athlete
@@ -34,8 +36,9 @@ def wdf_small():
 @pytest.fixture
 def wdf_big():
     athlete = models.Athlete(cp=200, w_prime=20000, weight=80)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     wdf = models.WorkoutDataFrame(
-        pd.read_csv('tests/example_files/workout_1.csv')
+        pd.read_csv(os.path.join(current_dir, 'example_files/workout_1.csv'))
     )
     wdf = wdf.set_index('time')
     wdf.athlete = athlete

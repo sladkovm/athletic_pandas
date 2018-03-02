@@ -30,4 +30,5 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Use of pytest.approx() in test_algorithms
+- Fixed path handling in the pytest fixtures
