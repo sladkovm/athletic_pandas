@@ -105,8 +105,8 @@ class TestAlgorithms:
         power = pd.Series(range(500))
         mean_max_power = algorithms.mean_max_power(power)
         ecp = algorithms.extended_critical_power(mean_max_power, version=version)
-        assert ecp[1] == expected[0]
-        assert ecp[250] == expected[1]
+        assert ecp[1] == pytest.approx(expected[0], 0.1)
+        assert ecp[250] == pytest.approx(expected[1], 0.1)
         assert len(ecp) == expected[2]
 
     def test_heartrate_model(self):

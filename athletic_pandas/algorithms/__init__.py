@@ -11,6 +11,20 @@ from .w_prime_balance import *
 
 
 def mean_max_power(power):
+    """Mean-Max Power
+
+    Also known as a Power-Duration-Curve
+
+    Parameters
+    ----------
+    power: pd.Series
+
+    Returns
+    -------
+    pd.Series
+
+    TO-DO: to be replaced by vmpy.algorithms.power_duration_curve()
+    """
     mmp = []
 
     for i in range(len(power)):
@@ -23,11 +37,31 @@ DataPoint = namedtuple('DataPoint', ['index', 'value'])
 
 
 def mean_max_bests(power, duration, amount):
+    """Compute best non-overlapping intervals
+
+    Parameters
+    ----------
+    power : pd.Series
+    duration : number
+        Duration of the interval in seconds
+    amount : int
+        Number of the non-overlaping intervals
+
+    Returns
+    -------
+    pd.Series
+    """
+    """TO-DO: replace with vmpy.preprocess.rolling_mean
+    
+    It can handle masking with replacement and allows "ewma"
+    """
     moving_average = power.rolling(duration).mean()
+
     length = len(moving_average)
     mean_max_bests = []
 
     for i in range(amount):
+
         if moving_average.isnull().all():
             mean_max_bests.append(DataPoint(np.nan, np.nan))
             continue
@@ -45,7 +79,21 @@ def mean_max_bests(power, duration, amount):
 
 
 def weighted_average_power(power):
+    """Weighted average power
+
+    Also known as the Normalized Power
+
+    Parameters
+    ----------
+    power : pd.Series
+
+    Returns
+    -------
+    number
+    """
+
     wap = power.rolling(30).mean().pow(4).mean().__pow__(1/4)
+
     return wap
 
 
