@@ -1,8 +1,8 @@
 from . import algorithms
 from .base import BaseWorkoutDataFrame
 from .helpers import requires
-from vmpy.algorithms import power_duration_curve
-from vmpy.metrics import normalized_power, wpk, compute_zones
+from vmpy.metrics import normalized_power, power_duration_curve
+from vmpy.streams import compute_zones, wpk
 
 
 class WorkoutDataFrame(BaseWorkoutDataFrame):
