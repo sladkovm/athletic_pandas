@@ -8,9 +8,14 @@ from vmpy.metrics import normalized_power, wpk, zones
 class WorkoutDataFrame(BaseWorkoutDataFrame):
     _metadata = ['athlete']
 
-    @requires(columns=['power'], athlete=['ftp'])
-    def compute_power_zones(self):
-        return zones(self.power, ftp=self.athlete.ftp)
+    @requires(columns=['power'])
+    def compute_power_zones(self, **kwargs):
+        if kwargs.get('ftp', None):
+            return zones(self.power, ftp=kwargs.get('ftp'))
+        elif kwargs.get('zones', None):
+            return zones(self.power, zones=kwargs.get('zones'))
+        else:
+            return zones(self.power, ftp=self.athlete.ftp)
 
     @requires(columns=['power'])
     def compute_mean_max_power(self):

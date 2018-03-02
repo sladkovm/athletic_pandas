@@ -182,6 +182,25 @@ class TestWorkoutDataFrame:
         assert type(rv) == pd.Series
         assert (rv == pd.Series(zones)).all()
 
+
+    def test_compute_power_zones_custom_ftp(self):
+        power = 4.5*np.array([0.54, 0.74, 0.89, 1.04, 1.19, 1.49, 10.0])
+        zones = [1,2,3,4,5,6,7]
+        wdf = models.WorkoutDataFrame({'power': power})
+        rv = wdf.compute_power_zones(ftp=4.5)
+        assert type(rv) == pd.Series
+        assert (rv == pd.Series(zones)).all()
+
+
+    def test_compute_power_zones_custom_zones(self):
+        power = np.array([0.54, 0.74, 0.89, 1.04, 1.19, 1.49, 10.0])
+        zones = [1,2,3,4,5,6,7]
+        wdf = models.WorkoutDataFrame({'power': power})
+        rv = wdf.compute_power_zones(zones=[-0.001, 0.55, 0.75, 0.9, 1.05, 1.2, 1.5, 10.0, 1000])
+        assert type(rv) == pd.Series
+        assert (rv == pd.Series(zones)).all()
+
+
     def test_compute_weighted_average_power(self, wdf_big):
         assert wdf_big.compute_weighted_average_power() == pytest.approx(156.24624656343036, 0.1)
 
