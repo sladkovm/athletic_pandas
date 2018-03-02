@@ -173,6 +173,15 @@ class TestWorkoutDataFrame:
         with pytest.raises(exceptions.MissingDataException):
             assert wdf.compute_mean_max_power() is None
 
+    def test_compute_power_zones(self):
+        power = 4.5*np.array([0.54, 0.74, 0.89, 1.04, 1.19, 1.49, 10.0])
+        zones = [1,2,3,4,5,6,7]
+        wdf = models.WorkoutDataFrame({'power': power})
+        wdf.athlete = models.Athlete(ftp=4.5)
+        rv = wdf.compute_power_zones()
+        assert type(rv) == pd.Series
+        assert (rv == pd.Series(zones)).all()
+
     def test_compute_weighted_average_power(self, wdf_big):
         assert wdf_big.compute_weighted_average_power() == pytest.approx(156.24624656343036, 0.1)
 

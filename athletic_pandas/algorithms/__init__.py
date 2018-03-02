@@ -37,7 +37,7 @@ DataPoint = namedtuple('DataPoint', ['index', 'value'])
 
 
 def mean_max_bests(power, duration, amount):
-    """Compute best non-overlapping intervals
+    """Compute multiple best non-overlapping intervals
 
     Parameters
     ----------
@@ -50,10 +50,6 @@ def mean_max_bests(power, duration, amount):
     Returns
     -------
     pd.Series
-    """
-    """TO-DO: replace with vmpy.preprocess.rolling_mean
-    
-    It can handle masking with replacement and allows "ewma"
     """
     moving_average = power.rolling(duration).mean()
 
@@ -90,6 +86,8 @@ def weighted_average_power(power):
     Returns
     -------
     number
+
+    replaced by vmpy.metrics.normalized_power
     """
 
     wap = power.rolling(30).mean().pow(4).mean().__pow__(1/4)
@@ -98,5 +96,18 @@ def weighted_average_power(power):
 
 
 def power_per_kg(power, weight):
+    """
+
+    Parameters
+    ----------
+    power
+    weight
+
+    Returns
+    -------
+
+    replaced by vmpy.metrics.wpk
+    """
     ppkg = power / weight
+
     return ppkg

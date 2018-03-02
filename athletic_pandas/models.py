@@ -2,11 +2,15 @@ from . import algorithms
 from .base import BaseWorkoutDataFrame
 from .helpers import requires
 from vmpy.algorithms import power_duration_curve
-from vmpy.metrics import normalized_power, wpk
+from vmpy.metrics import normalized_power, wpk, zones
 
 
 class WorkoutDataFrame(BaseWorkoutDataFrame):
     _metadata = ['athlete']
+
+    @requires(columns=['power'], athlete=['ftp'])
+    def compute_power_zones(self):
+        return zones(self.power, ftp=self.athlete.ftp)
 
     @requires(columns=['power'])
     def compute_mean_max_power(self):
