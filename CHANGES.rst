@@ -26,6 +26,7 @@ Breaking changes:
 
 New features:
 
+- add vmpy-0.1.6 as a dependency
 - compute_mean_max uses vmpy.algorithms.power_duration_curve
 - compute_weighted_average_power uses vmpy.metrics.normalized_power
 - compute_power_per_kg uses vmpy.metrics.wpk
