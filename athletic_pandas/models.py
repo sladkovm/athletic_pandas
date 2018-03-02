@@ -1,6 +1,8 @@
 from . import algorithms
 from .base import BaseWorkoutDataFrame
 from .helpers import requires
+from vmpy.algorithms import power_duration_curve
+from vmpy.metrics import normalized_power, wpk
 
 
 class WorkoutDataFrame(BaseWorkoutDataFrame):
@@ -8,15 +10,18 @@ class WorkoutDataFrame(BaseWorkoutDataFrame):
 
     @requires(columns=['power'])
     def compute_mean_max_power(self):
-        return algorithms.mean_max_power(self.power)
+        return power_duration_curve(self.power)
+        # return algorithms.mean_max_power(self.power)
 
     @requires(columns=['power'])
     def compute_weighted_average_power(self):
-        return algorithms.weighted_average_power(self.power)
+        return normalized_power(self.power, type='NP')
+        # return algorithms.weighted_average_power(self.power)
 
     @requires(columns=['power'], athlete=['weight'])
     def compute_power_per_kg(self):
-        return algorithms.power_per_kg(self.power, self.athlete.weight)
+        return wpk(self.power, self.athlete.weight)
+        # return algorithms.power_per_kg(self.power, self.athlete.weight)
 
     @requires(columns=['power'], athlete=['cp', 'w_prime'])
     def compute_w_prime_balance(self, algorithm=None, *args, **kwargs):

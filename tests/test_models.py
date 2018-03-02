@@ -174,7 +174,7 @@ class TestWorkoutDataFrame:
             assert wdf.compute_mean_max_power() is None
 
     def test_compute_weighted_average_power(self, wdf_big):
-        assert wdf_big.compute_weighted_average_power() == 156.24624656343036
+        assert wdf_big.compute_weighted_average_power() == pytest.approx(156.24624656343036, 0.1)
 
     def test_compute_weighted_average_power_missing_power(self, wdf_big):
         del wdf_big['power']
@@ -184,6 +184,7 @@ class TestWorkoutDataFrame:
 
     def test_compute_power_per_kg(self, wdf_big):
         # wdf_big.athlete.ftp = 300
+        # wdf_big.athlete.weight = 80
         ppkg = wdf_big.compute_power_per_kg()
 
         assert ppkg[1] == 1.1625000000000001
